@@ -29,11 +29,7 @@ font pango: monospace 8
 floating_modifier $mod
 
 # start a terminal
-<<<<<<< HEAD
-bindsym $mod+Return exec alacritty
-=======
 bindsym $mod+Return exec $TERMINAL
->>>>>>> 1f3d81b (init desktop)
 
 # kill focused window
 bindsym $mod+q kill
