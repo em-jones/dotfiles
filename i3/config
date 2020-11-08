@@ -178,4 +178,6 @@ new_window 1pixel
 
 # Em config
 exec --no-startup-id feh --recursive --bg-fill --randomize ~/Documents/wallpapers/*
+exec --no-startup-id /home/em/.config/polybar/launch.sh
+exec --no-startup-id picom
 # exec --no-startup-id synergy
