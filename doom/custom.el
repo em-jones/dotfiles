@@ -3,8 +3,22 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   '("/home/em/org/calendar.org" "/home/em/org/collection.org" "/home/em/org/emacs.org" "/home/em/org/example.org" "/home/em/org/gtd.org" "/home/em/org/journal.org" "/home/em/org/linked.org" "/home/em/org/mentorship.org" "/home/em/org/orgmode.org" "/home/em/org/people.org" "/home/em/org/pomodoro.org" "/home/em/org/projects.org" "/home/em/org/reading.org" "/home/em/org/vc-ref.org"))
  '(package-selected-packages
-   '(git-auto-commit-mode org-pomodoro org-journal-list org-roam org-journal)))
+   '(org-roam-server projectile-git-autofetch org-pomodoro org-journal-list org-roam org-journal))
+ '(org-roam-server-host "127.0.0.1")
+ '(org-roam-server-port 8080)
+ '(org-roam-server-authenticate nil)
+ '(org-roam-server-export-inline-images t)
+ '(org-roam-server-serve-files nil)
+ '(org-roam-server-served-file-extensions '("pdf" "mp4" "ogv"))
+ '(org-roam-server-network-poll t)
+ '(org-roam-server-network-arrows nil)
+ '(org-roam-server-network-label-truncate t)
+ '(org-roam-server-network-label-truncate-length 60)
+ '(org-roam-server-network-label-wrap-length 20)
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -33,7 +47,11 @@
 (setq org-journal-list-default-directory "~/notes/")
 (require 'org-journal-list)
 (require 'org-pomodoro)
-
-(setq org-todo-keywords
-      '((sequence "TODO" "PROJ" "LATER" "WAIT" | "DONE" "CANCELED" "DELEGATED")))
-
+(after! org
+  (require 'git-auto-commit-mode)
+   (setq org-todo-keywords '((sequence "TODO( )" "PROJ(p)" "LATER(l)" "WAIT(w)" "[ ](T)" "[P](P)" "[?](W)" "[X](D)" "|" "DONE(X)" "CANCELED(-)" "DELEGATED(>)")))
+   (setq-default gac-automatically-push-p t)
+   (add-to-list 'org-capture-templates
+      '("r" "Book" entry (file "~/org/reading.org")
+         "* %^{TITLE}\n:PROPERTIES:\n:ADDED: %<[%Y-%02m-%02d]>\n:END:%^{AUTHOR}p\n%?" :empty-lines 1))
+  )
