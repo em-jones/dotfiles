@@ -19,7 +19,7 @@
  '(org-roam-server-serve-files nil)
  '(org-roam-server-served-file-extensions '("pdf" "mp4" "ogv"))
  '(package-selected-packages
-   '(org-books org-wild-notifier hackernews company-org-roam org-superstar all-the-icons-dired all-the-icons-ivy-rich unicode-emoticons universal-emotions-emoticons ereader hnreader nov calibredb org-roam-server projectile-git-autofetch org-pomodoro org-roam)))
+   '(git-auto-commit-mode org-books org-wild-notifier hackernews company-org-roam org-superstar all-the-icons-dired all-the-icons-ivy-rich unicode-emoticons universal-emotions-emoticons ereader hnreader nov calibredb org-roam-server projectile-git-autofetch org-pomodoro org-roam)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
