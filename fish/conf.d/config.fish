@@ -1,10 +1,14 @@
 set -xg PATH ~/.emacs.d/bin:$PATH
 set -xg PATH ~/.config/polybar:$PATH
+set -xg EDITOR termite
 set -xg EMACSDIR ~/.emacs.d
 set -xg DOOMLOCALDIR ~/.emacs.d/.local
 set -xg DOOMDIR ~/.config/doom
-
-
+if test -n "$WSLENV" 
+    set -xg WSL_IP (grep nameserver /etc/resolv.conf | sed 's/nameserver //')
+    set -xg DISPLAY $WSL_IP:0
+    set -xg PULSE_SERVER tcp:$WSL_IP
+end
 # emacs
 if [ "$INSIDE_EMACS" = 'vterm' ]
    function clear
