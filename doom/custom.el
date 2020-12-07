@@ -6,7 +6,7 @@
  '(custom-safe-themes
    '("bf387180109d222aee6bb089db48ed38403a1e330c9ec69fe1f52460a8936b66" default))
  '(org-agenda-files
-   '("~/org/thanksgiving.org" "~/org/2020-11-17.org" "~/org/birthdays.org" "/home/em/org/calendar.org" "/home/em/org/collection.org" "/home/em/org/gtd.org" "/home/em/org/linked.org" "/home/em/org/mentorship.org" "/home/em/org/orgmode.org" "/home/em/org/people.org" "/home/em/org/projects.org" "/home/em/org/reading.org" "/home/em/org/vc-ref.org"))
+   '("~/org/marketing-automation.org" "~/org/vc-kafka-library.org" "~/org/vc-questions.org" "~/org/Friends.org" "~/org/orders.org" "/home/em/org/projects.org" "~/org/christmas.org" "~/org/private-cloud.org" "~/org/meditation.org" "~/org/2020-11-23.org" "~/org/thanksgiving.org" "~/org/2020-11-17.org" "~/org/birthdays.org" "/home/em/org/calendar.org" "/home/em/org/gtd.org" "/home/em/org/people.org" "/home/em/org/vc-ref.org"))
  '(org-roam-server-authenticate nil)
  '(org-roam-server-export-inline-images t)
  '(org-roam-server-host "127.0.0.1")
@@ -19,7 +19,7 @@
  '(org-roam-server-serve-files nil)
  '(org-roam-server-served-file-extensions '("pdf" "mp4" "ogv"))
  '(package-selected-packages
-   '(org-books org-wild-notifier hackernews company-org-roam org-superstar all-the-icons-dired all-the-icons-ivy-rich unicode-emoticons universal-emotions-emoticons ereader hnreader nov calibredb org-roam-server projectile-git-autofetch org-pomodoro org-roam)))
+   '(org-alert org-books org-wild-notifier hackernews company-org-roam org-super tar all-the-icons-dired all-the-icons-ivy-rich unicode-emoticons universal-emotions-emoticons ereader hnreader nov calibredb org-roam-server projectile-git-autofetch org-pomodoro org-roam)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -44,8 +44,10 @@
 (require 'org-pomodoro)
 (require 'org-superstar)
 (require 'org-roam)
-
+(require 'org-alert)
+(setq org-startup-folded 't)
 (after! org
+  (add-to-list 'org-modules 'org-habit)
   (require 'org-books)
   (setq org-books-file "~/rwl.org")
   (require 'git-auto-commit-mode)
@@ -78,7 +80,7 @@
      (templ '(
               ("f" "Book" entry (file+headline "~/org/rwl.org" "Fiction") "* %^{TITLE}\n:PROPERTIES:\n:ADDED: %<[%Y-%02m-%02d]>\n:END:%^{AUTHOR}p\n%?" :empty-lines 1)
               ("n" "Non/Fiction" entry (file+headline "~/org/rwl.org" "Non/Fiction") "* %^{TITLE}\n:PROPERTIES:\n:ADDED: %<[%Y-%02m-%02d]>\n:END:%^{AUTHOR}p\n%?" :empty-lines 1)
-              ("a" "Article" entry (file+headline "~/org/rwl.org" "Articles") "* %^{TITLE}\n:PROPERTIES:\n:ADDED: %<[%Y-%02m-%02d]>\n:END:%^{AUTHOR}p\n%?" :empty-lines 1)
+              ("a" "Article" entry (file+headline "~/org/rwl.org" "Articles") "* %^{TITLE}\n:PROPERTIES:\n:ADDED: %<[%Y-%02m-%02d]>\n:END:%^{LINK}p\n%^{AUTHOR}p\n%?" :empty-lines 1)
               ("p" "Podcats" entry (file+headline "~/org/rwl.org" "Podcasts") "* %^{TITLE}\n:PROPERTIES:\n:ADDED: %<[%Y-%02m-%02d]>\n:END:%^{AUTHOR}p\n%?" :empty-lines 1)
               ;; ("b" "Book" entry (file "some-file.org") "%(let* ((url (substring-no-properties (current-kill 0))) (details (org-books-get-details url))) (when details (apply #'org-books-format 1 details)))")
               ("s" "Someday" entry (file+headline "~/org/theabyss.org" "Tasks") "\n\n** LATER %?\nSCHEDULED: <%(org-read-date nil nil \"+1m\")>")
@@ -140,16 +142,36 @@
   '((:startgroup)
      ; Put mutually exclusive tags here
      (:endgroup)
-     ("@errand" . ?E)
+     ("@errand" . ?O)
      ("@laptop" . ?H)
      ("@tablet" . ?H)
-     ("@work" . ?W)
-     ("agenda" . ?a)
-     ("planning" . ?p)
-     ("publish" . ?P)
-     ("batch" . ?b)
-     ("note" . ?n)
-     ("idea" . ?i)))
+
+     ("@jodi" . ?J)
+     ("@eric" . ?E)
+     ("@stephan" . ?S)
+     ("@joe" . ?J)
+     ("@garrett" . ?G)
+
+    ("@andrzej" . ?A)
+    ("@shahid" . ?H)
+
+     ("@vera" . ?V)
+     ("@simon" . ?I)
+     ("@jp" . ?I)
+     ("@elvis" . ?E)
+     ("@derek" . ?D)
+
+
+    ("agenda" . ?a)
+    ("question" . ?q)
+    ("responsibility" . ?r)
+    ("planning" . ?p)
+    ("publish" . ?P)
+    ("batch" . ?b)
+    ("note" . ?n)
+    ("idea" . ?i)
+     )
+  )
  ;; Configure custom agenda views
  (setq org-agenda-custom-commands
        '(("d" "Dashboard"
@@ -181,7 +203,7 @@
            (todo "READY"
                  ((org-agenda-overriding-header "Ready for Work")
                   (org-agenda-files org-agenda-files)))
-           (todo "ACTIVE"
+           (todo "STARTED"
                  ((org-agenda-overriding-header "Active Projects")
                   (org-agenda-files org-agenda-files)))
            (todo "COMPLETED"
