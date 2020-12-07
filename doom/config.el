@@ -26,10 +26,17 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-nord)
-(setq
- doom-font (font-spec :family "CaskaydiaCove Nerd Font Mono" :size 15)
- doom-variable-pitch-font (font-spec :family "CaskaydiaCove Nerd Font Mono" :size 15)
- )
+
+(defun get-when-windows-else-when-arch (when-windows when-arch)
+      (if (string= (getenv "OS") "Windows_NT") when-windows when-arch)
+)
+
+(setq doom-font 
+      (font-spec :family (get-when-windows-else-when-arch "Cascadia Mono PL" "CaskaydiaCove Nerd Font Mono"):size 18)
+      doom-variable-pitch-font 
+      (font-spec :family (get-when-windows-else-when-arch "Cascadia Code PL" "CaskaydiaCove Nerd Font Mono" ) :size 18)
+)
+
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
