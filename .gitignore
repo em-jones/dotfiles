@@ -1,0 +1,16 @@
+chromium/
+dconf/
+environment.d/
+fish/
+fontconfig/
+git/
+gtk-3.0/
+nnn/
+procps/
+pulse/
+rofi/
+tmux/
+wallpapers/
+warp-terminal/
+waybar/
+starship.toml
