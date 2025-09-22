@@ -1,0 +1,44 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.15.1/.schema/devbox.schema.json",
+  "packages": [
+    "uv@latest",
+    "taskwarrior3@latest",
+    "neovim@latest",
+    "flyctl@latest",
+    "doctl@latest",
+    "kubectl@latest",
+    "k9s@latest",
+    "stripe-cli@latest",
+    "bun@latest",
+    "awscli2@latest",
+    "kubectx@latest",
+    "go@latest",
+    "kustomize@latest",
+    "kind@latest",
+    "kubernetes-helm@latest",
+    "skaffold@latest",
+    "jq@latest",
+    "yq-go@latest",
+    "devspace@latest",
+    "deno@latest",
+    "nodejs@latest",
+    "nodePackages.aws-cdk@latest",
+    "rustup@latest",
+    "dotnetCorePackages.dotnet_9.sdk@latest",
+    "vale@3.12.0"
+  ],
+  "shell": {
+    "init_hook": [
+      "echo 'Setting up Rust environment...'",
+      "mkdir -p $HOME/.rustup",
+      "set -x RUSTUP_HOME $HOME/.rustup",
+      "set -x LIBRARY_PATH $LIBRARY_PATH:\"$HOME/.local/share/devbox/global/default/.devbox/nix/profile/default/lib\"",
+      "rustup default stable"
+    ],
+    "scripts": {
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ]
+    }
+  }
+}
