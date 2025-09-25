@@ -18,5 +18,8 @@
 !nvim/*
 !nvim/**/*
 !devbox.*
+!taskwarrior-super-productivity-sync/
+!taskwarrior-super-productivity-sync/*
+node_modules
 !vscode-settings.json
 !vscode-keybindings.json

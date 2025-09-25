@@ -24,8 +24,9 @@ local servers = {
   tofu_ls = {
     filetypes = { "terraform", "terraform-vars", "tofu", "tf", "tfvars" },
   },
+  -- expert = {},
   elixirls = {
-    cmd = { "/home/em/.local/share/nvim/mason/bin/elixir-ls" },
+    cmd = { "elixir-ls" },
     filetypes = { "elixir", "eelixir", "heex", "eex" },
     on_attach = function(client, bufnr)
       vim.keymap.set("n", "<space>fp", ":Elixir from-pipe<cr>", { buffer = true, noremap = true })
@@ -46,6 +47,8 @@ local servers = {
   gopls = {},
   svelte = {},
   astro = {},
+  yamlls = {},
+  jsonls = {},
 }
 for name, opts in pairs(servers) do
   vim.lsp.config(name, opts)

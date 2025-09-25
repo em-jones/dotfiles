@@ -113,6 +113,54 @@
         }
       }
     },
+    "claude-code@latest": {
+      "last_modified": "2025-09-19T15:05:15Z",
+      "resolved": "github:NixOS/nixpkgs/90ade7da38aa49c2e2693a04a44662a0e61530e9#claude-code",
+      "source": "devbox-search",
+      "version": "1.0.119",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/r32qsmd0qhfy2iydx30fjmlnzqah3nmf-claude-code-1.0.119",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/r32qsmd0qhfy2iydx30fjmlnzqah3nmf-claude-code-1.0.119"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/3bix44aafi9r94zsgm4bg8gg4x6bxlb7-claude-code-1.0.119",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/3bix44aafi9r94zsgm4bg8gg4x6bxlb7-claude-code-1.0.119"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/pry25fmj0yh0cyfyaj0w8gq35cxm9gyd-claude-code-1.0.119",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/pry25fmj0yh0cyfyaj0w8gq35cxm9gyd-claude-code-1.0.119"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/94qr7pbnzdnk23y4waxzhliwc24hkr8y-claude-code-1.0.119",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/94qr7pbnzdnk23y4waxzhliwc24hkr8y-claude-code-1.0.119"
+        }
+      }
+    },
     "deno@latest": {
       "last_modified": "2025-08-09T20:54:02Z",
       "resolved": "github:NixOS/nixpkgs/1ef586712f85b4b004caecd385d6b023e7fd2450#deno",
@@ -355,6 +403,54 @@
             }
           ],
           "store_path": "/nix/store/czx850jj9f8dlzawhj6vbcwavzkp776a-flyctl-0.3.164"
+        }
+      }
+    },
+    "gh@latest": {
+      "last_modified": "2025-09-18T16:33:27Z",
+      "resolved": "github:NixOS/nixpkgs/f4b140d5b253f5e2a1ff4e5506edbf8267724bde#gh",
+      "source": "devbox-search",
+      "version": "2.79.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/ky5yynv151w1v0h2xby8knzy23b9csbb-gh-2.79.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/ky5yynv151w1v0h2xby8knzy23b9csbb-gh-2.79.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/zvljqh8dxlp71r4gzc3js3s35fa2l3zb-gh-2.79.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/zvljqh8dxlp71r4gzc3js3s35fa2l3zb-gh-2.79.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/ikvh3fzss3p70y6izxcppankis418rlz-gh-2.79.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/ikvh3fzss3p70y6izxcppankis418rlz-gh-2.79.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/hx0j1gvffm0m3gx5m50gjjggkwba0zxc-gh-2.79.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/hx0j1gvffm0m3gx5m50gjjggkwba0zxc-gh-2.79.0"
         }
       }
     },
@@ -1169,6 +1265,54 @@
             }
           ],
           "store_path": "/nix/store/p9bafwxzilh8rlpxd1jd5m1q4lp2yz02-stripe-cli-1.29.0"
+        }
+      }
+    },
+    "taskwarrior-tui@latest": {
+      "last_modified": "2025-09-18T16:33:27Z",
+      "resolved": "github:NixOS/nixpkgs/f4b140d5b253f5e2a1ff4e5506edbf8267724bde#taskwarrior-tui",
+      "source": "devbox-search",
+      "version": "0.26.3",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/83q45mgvk791p5s23pi7zc7nkf9jvzmp-taskwarrior-tui-0.26.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/83q45mgvk791p5s23pi7zc7nkf9jvzmp-taskwarrior-tui-0.26.3"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/bpwvhy9lc6i6839w5vh2irn6az58w2np-taskwarrior-tui-0.26.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/bpwvhy9lc6i6839w5vh2irn6az58w2np-taskwarrior-tui-0.26.3"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/vbips7wilb7d324klp9d2700h75qs88s-taskwarrior-tui-0.26.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/vbips7wilb7d324klp9d2700h75qs88s-taskwarrior-tui-0.26.3"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/6bgsnanfm83w45kn8js1v20ayf0gcf17-taskwarrior-tui-0.26.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/6bgsnanfm83w45kn8js1v20ayf0gcf17-taskwarrior-tui-0.26.3"
         }
       }
     },

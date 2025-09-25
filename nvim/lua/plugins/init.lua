@@ -6,6 +6,24 @@ local disabled_in_vs_code = function()
 end
 return {
   {
+    "https://codeberg.org/esensar/nvim-dev-container",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require("devcontainer").setup {
+        attach_mounts = {
+          enabled = true,
+          options = { "readonly" },
+        },
+        neovim_data = {
+          enabled = true,
+        },
+        neovim_state = {
+          enabled = true,
+        },
+      }
+    end,
+  },
+  {
     "ravitemer/mcphub.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim", -- Required for Job and HTTP requests

@@ -25,7 +25,10 @@
     "nodePackages.aws-cdk@latest",
     "rustup@latest",
     "dotnetCorePackages.dotnet_9.sdk@latest",
-    "vale@3.12.0"
+    "vale@3.12.0",
+    "gh@latest",
+    "taskwarrior-tui@latest",
+    "claude-code@latest"
   ],
   "shell": {
     "init_hook": [
