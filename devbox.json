@@ -25,7 +25,7 @@
     "nodePackages.aws-cdk@latest",
     "rustup@latest",
     "dotnetCorePackages.dotnet_9.sdk@latest",
-    "vale@3.12.0",
+    "vale@latest",
     "gh@latest",
     "taskwarrior-tui@latest",
     "claude-code@latest"
