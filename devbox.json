@@ -28,7 +28,9 @@
     "vale@latest",
     "gh@latest",
     "taskwarrior-tui@latest",
-    "claude-code@latest"
+    "claude-code@latest",
+    "podman@latest",
+    "podman-compose@latest"
   ],
   "shell": {
     "init_hook": [
