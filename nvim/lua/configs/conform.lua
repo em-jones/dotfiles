@@ -9,13 +9,13 @@ local options = {
     javascript = { "biome-check" },
     javascriptreact = { "biome-check" },
     typescriptreact = { "biome-check" },
-    markdown = { "biome-check" },
+    markdown = { "markdownlint-cli2", "prettierd" },
     json = { "deno_fmt" },
   },
 
   format_on_save = {
     -- These options will be passed to conform.format()
-    timeout_ms = 300,
+    timeout_ms = 1000,
     lsp_fallback = true,
   },
 }

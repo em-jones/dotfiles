@@ -49,6 +49,8 @@ local servers = {
   astro = {},
   yamlls = {},
   jsonls = {},
+  pyright = {},
+  vale_ls = {},
 }
 for name, opts in pairs(servers) do
   vim.lsp.config(name, opts)
