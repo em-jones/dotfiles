@@ -4,7 +4,6 @@
     "uv@latest",
     "taskwarrior3@latest",
     "neovim@latest",
-    "flyctl@latest",
     "doctl@latest",
     "kubectl@latest",
     "k9s@latest",
@@ -29,14 +28,20 @@
     "gh@latest",
     "taskwarrior-tui@latest",
     "claude-code@latest",
-    "podman@latest",
-    "podman-compose@latest"
+    "podman-compose@latest",
+    "wasmtime@latest",
+    "markdownlint-cli2@latest",
+    "vale-ls@latest",
+    "air@latest",
+    "lazygit@latest"
   ],
   "shell": {
     "init_hook": [
       "echo 'Setting up Rust environment...'",
       "mkdir -p $HOME/.rustup",
       "set -x RUSTUP_HOME $HOME/.rustup",
+      "set -x CARGO_HOME $HOME/.cargo",
+      "set -x PATH $CARGO_HOME/bin:$PATH",
       "set -x LIBRARY_PATH $LIBRARY_PATH:\"$HOME/.local/share/devbox/global/default/.devbox/nix/profile/default/lib\"",
       "rustup default stable"
     ],

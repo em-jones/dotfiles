@@ -4,6 +4,7 @@ local servers = {
   html = {
     filetypes = { "html" },
   },
+  fish_ls = {},
   cssls = {},
   tailwindcss = {
     filetypes = {

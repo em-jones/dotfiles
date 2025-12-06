@@ -3,7 +3,7 @@ local options = {
     lua = { "stylua" },
     rust = { "rustfmt", lsp_format = "fallback" },
     astro = { "biome-check" },
-    css = { "biome-check" },
+    -- css = { "biome-check" },
     html = { "biome-check" },
     typescript = { "biome-check" },
     javascript = { "biome-check" },

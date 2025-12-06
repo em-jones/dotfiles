@@ -43,3 +43,8 @@ flatpak install app.zen_browser.zen
 
 echo "Installing nordvpn"
 sh <(wget -qO - https://downloads.nordcdn.com/apps/linux/install.sh)
+
+echo "Configuring custom keybindings"
+cat ~/.config/dconf/custom-keybindings.dconf | dconf load /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/
+echo "Turning off screenshot noise"
+sudo mv /usr/share/sounds/freedesktop/stereo/camera-shutter.oga /usr/share/sounds/freedesktop/stereo/camera-shutter-disabled.oga
