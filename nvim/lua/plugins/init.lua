@@ -140,7 +140,6 @@ return {
       "jfpedroza/neotest-elixir",
     },
     ft = { "go", "typescriptreact", "javascriptreact" },
-    init = function() end,
     config = function()
       local neotest_ns = vim.api.nvim_create_namespace "neotest"
       vim.diagnostic.config({
@@ -238,6 +237,7 @@ return {
     init = function() end,
     config = function(_, opts)
       local dap = require "dap"
+      dap.defaults.elixir.exception_breakpoints = {}
       dap.configurations.rust = {
         {
           type = "lldb",
@@ -261,19 +261,6 @@ return {
       require("crates").setup()
     end,
   },
-  -- {
-  --   "jmederosalvarado/roslyn.nvim",
-  -- cond = disabled_in_vs_code,
-  --   ft = { "csharp", "cs" },
-  --   config = function()
-  --     require("roslyn").setup {
-  --       dotnet_cmd = "dotnet", -- this is the default
-  --       roslyn_version = "4.8.0-3.23475.7",
-  --       on_attach = on_attach,
-  --       capabilities = capabilities,
-  --     }
-  --   end,
-  -- },
   {
     "ionide/Ionide-vim",
     cond = disabled_in_vs_code,
@@ -467,6 +454,10 @@ return {
     cond = disabled_in_vs_code,
     opts = {
       ensure_installed = {
+        "go",
+        "gotmpl",
+        "yaml",
+        "json",
         "vim",
         "lua",
         "html",
@@ -491,77 +482,80 @@ return {
     },
   },
   {
+    "ravsii/nvim-dap-envfile",
+    version = "*", -- use latest stable release
+    dependencies = { "mfussenegger/nvim-dap" },
+    opts = {},
+  },
+  {
     "rcarriga/nvim-dap-ui",
     cond = disabled_in_vs_code,
     ft = { "typescript", "typescriptreact", "python", "elixir", "cs", "fs", "rust", "go" },
     dependencies = { "folke/neodev.nvim", "nvim-neotest/nvim-nio", "theHamsta/nvim-dap-virtual-text" },
     config = function()
+      vim.fn.sign_define("DapBreakpoint", {
+        text = "", -- Nerdfont icon or any character
+        texthl = "DapBreakpointSymbol", -- Custom highlight group for the icon
+        linehl = "DapBreakpoint", -- Custom highlight group for the entire line
+        numhl = "DapBreakpoint", -- Custom highlight group for the line number
+      })
       require("neodev").setup {
         library = { plugins = { "nvim-dap-ui" }, types = true },
       }
       local dapui = require "dapui"
       dapui.setup()
       local dap = require "dap"
-      dap.listeners.before.attach["dapui_config"] = function()
-        dapui.open {}
+
+      dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
       end
-      dap.listeners.after.event_initialized["dapui_config"] = function()
-        dapui.open {}
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
       end
-      dap.listeners.before.event_terminated["dapui_config"] = function()
-        dapui.close {}
+      dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
       end
-      dap.listeners.before.event_exited["dapui_config"] = function()
-        dapui.close {}
+      dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
       end
 
-      -- require("nvim-dap-virtual-text").setup {
-      --   -- This just tries to mitigate the chance that I leak tokens here. Probably won't stop it from happening...
-      --   display_callback = function(variable)
-      --     local name = string.lower(variable.name)
-      --     local value = string.lower(variable.value)
-      --     if name:match "secret" or name:match "api" or value:match "secret" or value:match "api" then
-      --       return "*****"
-      --     end
-      --
-      --     if #variable.value > 15 then
-      --       return " " .. string.sub(variable.value, 1, 15) .. "... "
-      --     end
-      --
-      --     return " " .. variable.value
-      --   end,
-      -- }
+      require("nvim-dap-virtual-text").setup {
+        -- This just tries to mitigate the chance that I leak tokens here. Probably won't stop it from happening...
+        display_callback = function(variable)
+          local name = string.lower(variable.name)
+          local value = string.lower(variable.value)
+          if name:match "secret" or name:match "api" or value:match "secret" or value:match "api" then
+            return "*****"
+          end
 
-      local elixir_ls_debugger = "/home/em/.local/share/nvim/mason/bin/elixir-ls-debugger"
+          if #variable.value > 15 then
+            return " " .. string.sub(variable.value, 1, 15) .. "... "
+          end
+
+          return " " .. variable.value
+        end,
+      }
+      local elixir_ls_debugger = vim.fn.expand "~/.local/share/nvim/mason/bin/elixir-ls-debugger"
+
       if elixir_ls_debugger ~= "" then
         dap.adapters.mix_task = {
           type = "executable",
           command = elixir_ls_debugger,
         }
-
-        dap.configurations.elixir = {
-          {
-            type = "mix_task",
-            name = "phoenix server",
-            task = "phx.run",
-            request = "launch",
-            projectDir = "${workspaceFolder}",
-            debugAutoInterpretAllModules = false,
-            debugInterpretModulesPatterns = { "FsWeb.*", "Fs.*", "Ash.*" },
-            exitAfterTaskReturns = false,
-          },
-        }
       end
 
       vim.keymap.set("n", "<leader>dui", require("dapui").toggle)
-      vim.keymap.set("n", "<leader>ic", require("dap").continue)
-      vim.keymap.set("n", "<leader>io", require("dap").step_over)
-      vim.keymap.set("n", "<leader>ii", require("dap").step_into)
+      vim.keymap.set("n", "<leader>dc", require("dap").continue)
+      vim.keymap.set("n", "<leader>do", require("dap").step_over)
+      vim.keymap.set("n", "<leader>di", require("dap").step_into)
       vim.keymap.set("n", "L", require("dap").step_over)
       vim.keymap.set("n", "J", require("dap").step_into)
       vim.keymap.set("n", "<leader>iO", require("dap").step_out)
       vim.keymap.set("n", "<leader>b", require("dap").toggle_breakpoint)
       vim.keymap.set("n", "<leader>gb", require("dap").run_to_cursor)
+      vim.keymap.set("n", "<space>?", function()
+        require("dapui").eval(nil, { enter = true })
+      end)
       vim.keymap.set("n", "<leader>B", function()
         require("dap").set_breakpoint(vim.fn.input "Breakpoint condition: ")
       end)
