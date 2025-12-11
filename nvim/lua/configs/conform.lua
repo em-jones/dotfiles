@@ -3,6 +3,7 @@ local options = {
     lua = { "stylua" },
     rust = { "rustfmt", lsp_format = "fallback" },
     astro = { "biome-check" },
+    go = { "gofmt", "golangci-lint", "goimports-reviser", lsp_format = "fallback" },
     -- css = { "biome-check" },
     html = { "biome-check" },
     typescript = { "biome-check" },

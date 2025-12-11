@@ -7,12 +7,11 @@ local servers = {
   },
   fish_ls = {},
   cssls = {},
+  jdtls = {},
   tailwindcss = {
     filetypes = {
       "html",
       "css",
-      "javascript",
-      "typescript",
       "javascriptreact",
       "typescriptreact",
       "heex",
@@ -22,6 +21,7 @@ local servers = {
     },
     settings = {},
   },
+  golangci_lint_ls = {},
   ts_ls = {},
   tofu_ls = {
     filetypes = { "terraform", "terraform-vars", "tofu", "tf", "tfvars" },

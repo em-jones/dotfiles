@@ -504,7 +504,9 @@ return {
       }
       local dapui = require "dapui"
       dapui.setup()
+
       local dap = require "dap"
+      dap.set_log_level "DEBUG"
 
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
