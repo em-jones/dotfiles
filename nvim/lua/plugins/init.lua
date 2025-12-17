@@ -3,6 +3,28 @@
 local disabled_in_vs_code = require("custom.util").disabled_in_vs_code
 return {
   {
+    "andythigpen/nvim-coverage",
+    cond = disabled_in_vs_code,
+    ft = { "python", "typescript", "typescriptreact", "javascript", "javascriptreact", "go", "rust", "elixir" },
+    config = function()
+      require("coverage").setup {
+        load_coverage_cb = function()
+          Snacks.notifier.notify("Coverage data loaded", { style = "fancy", timeout = 2000 })
+        end,
+        auto_reload = true, -- reload coverage when a file is saved
+        commands = true, -- create commands
+        highlights = {
+          covered = { guifg = "#00ff00", gui = "bold" },
+          uncovered = { guifg = "#ff0000", gui = "bold" },
+          partial = { guifg = "#ffff00", gui = "bold" },
+        },
+        summary = {
+          min_coverage = 80, -- minimum coverage threshold to use
+        },
+      }
+    end,
+  },
+  {
     "https://codeberg.org/esensar/nvim-dev-container",
     dependencies = "nvim-treesitter/nvim-treesitter",
     lazy = false,
@@ -402,12 +424,6 @@ return {
         enable = true,
       },
     },
-  },
-  {
-    "ravsii/nvim-dap-envfile",
-    version = "*", -- use latest stable release
-    dependencies = { "mfussenegger/nvim-dap" },
-    opts = {},
   },
   {
     "rcarriga/nvim-dap-ui",

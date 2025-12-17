@@ -38,7 +38,7 @@ return {
           dap_adapter = "lldb",
         },
         require "neotest-elixir" {
-          mix_task = "test",
+          mix_task = "test.interactive",
         },
         require "neotest-rust" {},
 
@@ -77,5 +77,6 @@ return {
     map("n", "<leader>rr", ntest_run .. "_last()<CR>", { desc = "Run last" })
     map("n", "<leader>RR", ntest_run .. "({strategy='dap'})<CR>", { desc = "Debug last" })
     map("n", "<leader>rw", "<cmd>lua require('neotest').watch.toggle()<CR>", { desc = "Debug last" })
+    map("n", "<leader>RW", "<cmd>lua require('neotest').watch.toggle({suite = true})<CR>", { desc = "Watch all" })
   end,
 }

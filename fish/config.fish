@@ -2,7 +2,6 @@ set -x DOTNET_ROOT ~/dotnet
 fish_add_path ~/dotnet
 fish_add_path ~/.cargo/bin
 if echo $ELS_MODE | grep -q 'debug_adapter'
-  set -x ELS_ELIXIR_OPTS "--name debugger@127.0.0.1 --cookie secret"
 else
   devbox global shellenv --init-hook | source
 end
