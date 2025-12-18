@@ -32,6 +32,7 @@ return {
       adapters = {
         require "neotest-golang" {
           runner = "gotestsum",
+          go_test_args = { "-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out" },
         },
         require "neotest-vitest",
         require "neotest-dotnet" {

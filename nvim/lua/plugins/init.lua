@@ -1,7 +1,10 @@
 -- All plugins have lazy=true by default,to load a plugin on startup just lazy=false
 -- List of all default plugins & their definitions
+--
 local disabled_in_vs_code = require("custom.util").disabled_in_vs_code
 return {
+  { import = "nvchad.blink.lazyspec" },
+  { "artemave/workspace-diagnostics.nvim", cond = disabled_in_vs_code },
   {
     "andythigpen/nvim-coverage",
     cond = disabled_in_vs_code,

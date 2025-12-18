@@ -75,7 +75,7 @@ else
     require "mappings"
   end)
 
-  vim.cmd [[imap <silent><script><expr> <C-a> copilot#Accept("\<CR>")]]
+  vim.cmd [[imap <silent><script><expr> <C-x> copilot#Accept("\<CR>")]]
 
   vim.api.nvim_set_keymap(
     "n",

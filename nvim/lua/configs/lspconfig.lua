@@ -38,6 +38,8 @@ local servers = {
       vim.keymap.set("n", "<space>fp", ":Elixir from-pipe<cr>", { buffer = true, noremap = true })
       vim.keymap.set("n", "<space>tp", ":Elixir to-pipe<cr>", { buffer = true, noremap = true })
       vim.keymap.set("v", "<space>em", ":Elixir alias-refactor<cr>", { buffer = true, noremap = true })
+      require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
+      Snacks.notifier.notify("ElixirLS attached", "info", { title = "LSP" })
     end,
     settings = {
       elixirLS = {
