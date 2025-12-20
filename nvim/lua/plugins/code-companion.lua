@@ -29,7 +29,7 @@ return {
     },
     interactions = {
       chat = {
-        adapter = "anthropic",
+        adapter = "claude_code",
         model = "claude-haiku-4-5-20251001",
       },
     },

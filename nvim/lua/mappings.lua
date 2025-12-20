@@ -57,6 +57,12 @@ end)
 map("n", "<leader>bt", function()
   require("base46").toggle_transparency()
 end)
+map("n", "<leader>dk", function()
+  require("dial.map").manipulate "increment"
+end)
+map("n", "<leader>dj", function()
+  require("dial.map").manipulate "decrement"
+end)
 
 -- visual
 --

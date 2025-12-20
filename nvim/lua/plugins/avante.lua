@@ -11,9 +11,9 @@ return {
   -- opts = {
   --   -- add any opts here
   --   -- this file can contain specific instructions for your project
-  --   instructions_file = "avante.md",
+  --   instructions_file = "AGENTS.md",
   --   -- for example
-  --   provider = "claude-code",
+  --   provider = "claude",
   --   providers = {
   --     claude = {
   --       endpoint = "https://api.anthropic.com",
