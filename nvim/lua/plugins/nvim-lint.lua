@@ -8,13 +8,13 @@ return {
     local lint = require "lint"
 
     lint.linters_by_ft = {
-      javascript = { "eslint_d" },
-      typescript = { "eslint_d" },
-      javascriptreact = { "eslint_d" },
-      typescriptreact = { "eslint_d" },
-      svelte = { "eslint_d" },
+      javascript = { "oxlint" },
+      typescript = { "oxlint" },
+      javascriptreact = { "oxlint" },
+      typescriptreact = { "oxlint" },
+      svelte = { "oxlint" },
       python = { "pylint" },
-      markdown = { "eslint_d", "markdownlint-cli2" },
+      markdown = { "oxlint", "markdownlint-cli2" },
       elixir = { "credo" },
     }
     local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })

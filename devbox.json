@@ -1,13 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.15.1/.schema/devbox.schema.json",
   "packages": [
-    "air@latest",
     "awscli2@latest",
     "binutils@latest",
     "bun@latest",
-    "claude-code@latest",
     "deno@latest",
-    "devspace@latest",
     "doctl@latest",
     "dotnet-sdk_10@latest",
     "gh@latest",
@@ -21,11 +18,7 @@
     "kustomize@latest",
     "kubernetes-helm@latest",
     "lazygit@latest",
-    "markdownlint-cli2@latest",
-    "neovim@latest",
-    "nodejs@latest",
     "nodePackages.aws-cdk@latest",
-    "podman@latest",
     "podman-compose@latest",
     "rustup@latest",
     "skaffold@latest",
@@ -34,21 +27,21 @@
     "taskwarrior-tui@latest",
     "uv@latest",
     "vale@latest",
-    "vale-ls@latest",
     "wasmtime@latest",
     "yq-go@latest",
-    "postgresql@latest"
+    "postgresql@latest",
+    "claude-code@latest",
+    "kubevela@latest",
+    "pnpm@latest",
+    "wrangler@latest",
+    "podman@latest",
+    "vale-ls@latest"
   ],
+  "env": {
+    "KIND_EXPERIMENTAL_PROVIDER": "podman"
+  },
   "shell": {
-    "init_hook": [
-      "echo 'Setting up Rust environment...'",
-      "mkdir -p $HOME/.rustup",
-      "set -x RUSTUP_HOME $HOME/.rustup",
-      "set -x CARGO_HOME $HOME/.cargo",
-      "set -x PATH $CARGO_HOME/bin:$PATH",
-      "set -x LIBRARY_PATH $LIBRARY_PATH:\"$HOME/.local/share/devbox/global/default/.devbox/nix/profile/default/lib\"",
-      "rustup default stable"
-    ],
+    "init_hook": [],
     "scripts": {
       "test": [
         "echo \"Error: no test specified\" && exit 1"

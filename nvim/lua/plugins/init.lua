@@ -33,15 +33,14 @@ return {
     lazy = false,
     config = function()
       require("devcontainer").setup {
+        container_runtime = "podman",
         attach_mounts = {
-          enabled = true,
-          options = { "readonly" },
-        },
-        neovim_data = {
-          enabled = true,
-        },
-        neovim_state = {
-          enabled = true,
+          neovim_data = {
+            enabled = true,
+          },
+          neovim_state = {
+            enabled = true,
+          },
         },
       }
     end,
@@ -110,25 +109,7 @@ return {
   {
     "romgrk/nvim-treesitter-context",
     cond = disabled_in_vs_code,
-    config = function()
-      require("treesitter-context").setup {
-        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-        throttle = true, -- Throttles plugin updates (may improve performance)
-        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-        patterns = {
-          -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-          -- For all filetypes
-          -- Note that setting an entry here replaces all other patterns for this entry.
-          -- By setting the 'default' entry below, you can control which nodes you want to
-          -- appear in the context window.
-          default = {
-            "class",
-            "function",
-            "method",
-          },
-        },
-      }
-    end,
+    lazy = false,
   },
   {
     "rmagatti/goto-preview",
@@ -240,7 +221,6 @@ return {
       require("telescope").load_extension "luasnip"
     end,
   },
-  { "github/copilot.vim", event = "BufEnter", cond = disabled_in_vs_code },
   {
     "allaman/kustomize.nvim",
     cond = disabled_in_vs_code,
@@ -257,53 +237,55 @@ return {
     cond = disabled_in_vs_code,
     cmd = { "DBUI" },
     dependencies = { "kristijanhusak/vim-dadbod-completion", "tpope/vim-dadbod" },
-    config = function()
-      local autocmd = vim.api.nvim_create_autocmd
-      autocmd("BufEnter", {
-        callback = function()
-          require("cmp").setup.buffer { sources = { { name = "vim-dadbod-completion" } } }
+    init = function()
+      vim.g.db_ui_use_nerd_fonts = 1
+    end,
+  },
+  {
+    "folke/flash.nvim",
+    event = "BufRead",
+    opts = {},
+    keys = {
+      {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
         end,
-      })
-    end,
+        desc = "Flash jump",
+      },
+      {
+        "S",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").treesitter()
+        end,
+        desc = "Flash treesitter",
+      },
+      {
+        "r",
+        mode = "o",
+        function()
+          require("flash").remote()
+        end,
+        desc = "Remote flash",
+      },
+      {
+        "R",
+        mode = { "o", "x" },
+        function()
+          require("flash").treesitter_search()
+        end,
+        desc = "Treesitter search",
+      },
+    },
   },
   {
-    "phaazon/hop.nvim",
-    event = "BufRead",
-    config = function()
-      local hop = require "hop"
-      hop.setup()
-      if vim.g.vscode then
-        local opts = { silent = true, noremap = false }
-        local keymap = vim.api.nvim_set_keymap
-        hop.setup {
-          keys = "etovxqpdygfblzhckisuran",
-        }
-        local directions = require("hop.hint").HintDirection
-        vim.keymap.set("", "s", function()
-          hop.hint_char1 { direction = directions.AFTER_CURSOR, current_line_only = true }
-        end, { remap = true })
-        vim.keymap.set("", "S", function()
-          hop.hint_char1 { direction = directions.BEFORE_CURSOR, current_line_only = true }
-        end, { remap = true })
-        vim.keymap.set("", "t", function()
-          hop.hint_char1 { direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 }
-        end, { remap = true })
-        vim.keymap.set("", "T", function()
-          hop.hint_char1 { direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 }
-        end, { remap = true })
-      else
-        vim.api.nvim_set_keymap("n", "s", ":HopChar2<cr>", { silent = true })
-        vim.api.nvim_set_keymap("n", "S", ":HopWord<cr>", { silent = true })
-      end
-    end,
-  },
-  {
-    "lukas-reineke/headlines.nvim",
-    cond = disabled_in_vs_code,
-    event = "BufRead",
-    config = function()
-      require("headlines").setup()
-    end,
+    "MeanderingProgrammer/render-markdown.nvim",
+    -- dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" }, -- if you use the mini.nvim suite
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you prefer nvim-web-devicons
+    opts = {},
+    ft = { "md", "markdown" },
   },
   {
     "nvim-telescope/telescope-frecency.nvim",
@@ -403,25 +385,39 @@ return {
     cond = disabled_in_vs_code,
     opts = {
       ensure_installed = {
+        "astro",
+        "bash",
+        "c",
+        "c_sharp",
+        "css",
+        "csv",
+        "cue",
+        "editorconfig",
+        "elixir",
+        "fish",
+        "fsharp",
         "go",
         "gomod",
         "gotmpl",
-        "yaml",
-        "json",
-        "vim",
-        "lua",
-        "html",
-        "helm",
         "heex",
-        "css",
+        "helm",
+        "html",
+        "java",
         "javascript",
-        "typescript",
-        "terraform",
-        "elixir",
-        "tsx",
-        "c",
+        "json",
+        "lua",
         "markdown",
         "markdown_inline",
+        "nix",
+        "python",
+        "svelte",
+        "terraform",
+        "todotxt",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "yaml",
       },
       indent = {
         enable = true,

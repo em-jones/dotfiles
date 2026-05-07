@@ -16,7 +16,7 @@ local trigger_text = ";"
 
 return {
   "saghen/blink.cmp",
-  build = "cargo build --release",
+  build = "cargo +nightly-2025-09-30 build --release",
   enabled = true,
   -- In case there are breaking changes and you want to go back to the last
   -- working release
@@ -25,20 +25,22 @@ return {
   dependencies = {
     "moyiz/blink-emoji.nvim",
     "Kaiser-Yang/blink-cmp-dictionary",
+    "fang2hou/blink-copilot",
   },
   opts = function(_, opts)
     -- NOTE: The new way to enable LuaSnip
     -- Merge custom sources with the existing ones from lazyvim
     -- NOTE: by default lazyvim already includes the lazydev source, so not adding it here again
     opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
-      default = { "lsp", "path", "snippets", "buffer", "dadbod", "emoji", "dictionary" },
+      default = { "lsp", "path", "snippets", "buffer", "emoji", "dictionary", "copilot" },
+      per_filetype = {
+        sql = { "snippets", "dadbod", "buffer" },
+      },
       providers = {
         lsp = {
           name = "lsp",
           enabled = true,
           module = "blink.cmp.sources.lsp",
-          kind = "LSP",
-          min_keyword_length = 2,
           -- When linking markdown notes, I would get snippets and text in the
           -- suggestions, I want those to show only if there are no LSP
           -- suggestions
@@ -138,58 +140,29 @@ return {
           min_keyword_length = 2,
           opts = { insert = true }, -- Insert emoji (default) or complete its name
         },
+        dictionary = {
+          module = "blink-cmp-dictionary",
+          name = "Dict",
+          min_keyword_length = 1,
+          opts = {
+            -- Optional: explicitly force fallback mode
+            -- (By default, fallback is used when fzf is not found)
+            force_fallback = true,
+          },
+        },
         -- https://github.com/Kaiser-Yang/blink-cmp-dictionary
         -- In macOS to get started with a dictionary:
         -- cp /usr/share/dict/words ~/github/dotfiles-latest/dictionaries/words.txt
         --
         -- NOTE: For the word definitions make sure "wn" is installed
         -- brew install wordnet
-        dictionary = {
-          module = "blink-cmp-dictionary",
-          name = "Dict",
-          score_offset = 20, -- the higher the number, the higher the priority
-          -- https://github.com/Kaiser-Yang/blink-cmp-dictionary/issues/2
-          enabled = true,
-          max_items = 8,
-          min_keyword_length = 3,
-          opts = {
-            -- -- The dictionary by default now uses fzf, make sure to have it
-            -- -- installed
-            -- -- https://github.com/Kaiser-Yang/blink-cmp-dictionary/issues/2
-            --
-            -- Do not specify a file, just the path, and in the path you need to
-            -- have your .txt files
-            dictionary_directories = { vim.fn.expand "~/github/dotfiles-latest/dictionaries" },
-            -- Notice I'm also adding the words I add to the spell dictionary
-            dictionary_files = {
-              vim.fn.expand "~/github/dotfiles-latest/neovim/neobean/spell/en.utf-8.add",
-              vim.fn.expand "~/github/dotfiles-latest/neovim/neobean/spell/es.utf-8.add",
-            },
-            -- --  NOTE: To disable the definitions uncomment this section below
-            --
-            -- separate_output = function(output)
-            --   local items = {}
-            --   for line in output:gmatch("[^\r\n]+") do
-            --     table.insert(items, {
-            --       label = line,
-            --       insert_text = line,
-            --       documentation = nil,
-            --     })
-            --   end
-            --   return items
-            -- end,
-          },
-        },
         -- -- Third class citizen mf always talking shit
-        -- copilot = {
-        --   name = "copilot",
-        --   enabled = true,
-        --   module = "blink-cmp-copilot",
-        --   kind = "Copilot",
-        --   min_keyword_length = 6,
-        --   score_offset = -100, -- the higher the number, the higher the priority
-        --   async = true,
-        -- },
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          score_offset = 100,
+          async = true,
+        },
       },
     })
 
@@ -199,6 +172,27 @@ return {
 
     opts.snippets = {
       preset = "luasnip", -- Choose LuaSnip as the snippet engine
+    }
+    opts.keymap = {
+      preset = "super-tab",
+      ["<Tab>"] = {
+        function(cmp)
+          if vim.b[vim.api.nvim_get_current_buf()].nes_state then
+            cmp.hide()
+            return (
+              require("copilot-lsp.nes").apply_pending_nes()
+              and require("copilot-lsp.nes").walk_cursor_end_edit()
+            )
+          end
+          if cmp.snippet_active() then
+            return cmp.accept()
+          else
+            return cmp.select_and_accept()
+          end
+        end,
+        "snippet_forward",
+        "fallback",
+      },
     }
 
     return opts

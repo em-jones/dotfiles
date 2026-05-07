@@ -19,11 +19,23 @@ map("n", "<leader>gd", "<cmd>Telescope lsp_definitions<cr>", { desc = "goto def"
 map("n", "gd", "<cmd>Telescope lsp_definitions<cr>", { desc = "goto def" })
 map("n", "<leader>tt", "<cmd>Telescope diagnostics<cr>", { desc = "goto def" })
 map("n", "<leader>tr", "<cmd>Telescope lsp_references<cr>", { desc = "goto def" })
+map("n", "<leader>sy", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", { desc = "goto def" })
+map("n", "<leader>nh", "<cmd>Gitsigns next_hunk<cr>", { desc = "next hunk" })
+map("n", "<leader>ph", "<cmd>Gitsigns prev_hunk<cr>", { desc = "prev hunk" })
+-- Map <leader>pa to copy absolute path
+map("n", "<leader>pa", ":let @+=expand('%:p')<CR>", { desc = "Copy absolute file path" })
+
+-- Map <leader>pr to copy relative path
+map("n", "<leader>pr", ":let @+=expand('%')<CR>", { desc = "Copy relative file path" })
+
+-- Map <leader>pn to copy filename only
+map("n", "<leader>pn", ":let @+=expand('%:t')<CR>", { desc = "Copy filename only" })
+
 -- find
 map("n", "<leader>ff", "<cmd> Telescope find_files <CR>", { desc = "Find files" })
 map("n", "<leader>fa", "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", { desc = "Find all" })
 map("n", "<leader>fs", "<cmd> w <CR>", { desc = "Save file" })
-map("n", "<leader>fg", "<cmd> Telescope live_grep <CR>", { desc = "Live grep" })
+map("n", "<leader>fg", '<cmd> Telescope live_grep additional_args={"--hidden"}<CR>', { desc = "Live grep" })
 map("n", "<leader>fb", "<cmd> Telescope buffers <CR>", { desc = "Find buffers" })
 map("n", "<leader>fh", "<cmd> Telescope help_tags <CR>", { desc = "Help page" })
 map("n", "<leader>fo", "<cmd> Telescope oldfiles <CR>", { desc = "Find oldfiles" })

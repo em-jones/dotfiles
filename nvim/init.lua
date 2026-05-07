@@ -1,43 +1,3 @@
-vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
-vim.g.mapleader = " "
-vim.g.vscode_snippets_path = vim.fn.stdpath "config" .. "/snippets"
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.g.copilot_no_tab_map = true
-vim.o.guifont = "Comic Code Ligatures"
-
-vim.diagnostic.config { virtual_text = false }
-
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
-vim.api.nvim_set_hl(0, "Pmenu", { bg = "none" })
-
--- bootstrap lazy and all plugins
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-
-if not vim.uv.fs_stat(lazypath) then
-  local repo = "https://github.com/folke/lazy.nvim.git"
-  vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
-end
-
-vim.opt.rtp:prepend(lazypath)
-
-local lazy_config = require "configs.lazy"
-
--- load plugins
-require("lazy").setup({
-  {
-    "NvChad/NvChad",
-    lazy = false,
-    branch = "v2.5",
-    import = "nvchad.plugins",
-  },
-
-  { import = "plugins" },
-}, lazy_config)
-
 if vim.g.vscode then
   vim.cmd [[
      nnoremap zM :call VSCodeNotify('editor.foldAll')<CR>
@@ -60,6 +20,45 @@ if vim.g.vscode then
      nmap <expr> k MoveCursor('k')
   ]]
 else
+  vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
+  vim.g.mapleader = " "
+  vim.g.vscode_snippets_path = vim.fn.stdpath "config" .. "/snippets"
+  vim.opt.tabstop = 2
+  vim.opt.shiftwidth = 2
+  vim.opt.expandtab = true
+  vim.g.copilot_no_tab_map = true
+  vim.o.guifont = "Comic Code Ligatures"
+
+  vim.diagnostic.config { virtual_text = false }
+
+  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+  vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
+  vim.api.nvim_set_hl(0, "Pmenu", { bg = "none" })
+
+  -- bootstrap lazy and all plugins
+  local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+
+  if not vim.uv.fs_stat(lazypath) then
+    local repo = "https://github.com/folke/lazy.nvim.git"
+    vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
+  end
+
+  vim.opt.rtp:prepend(lazypath)
+
+  local lazy_config = require "configs.lazy"
+
+  -- load plugins
+  require("lazy").setup({
+    {
+      "NvChad/NvChad",
+      lazy = false,
+      branch = "v2.5",
+      import = "nvchad.plugins",
+    },
+
+    { import = "plugins" },
+  }, lazy_config)
   vim.opt.relativenumber = true
   vim.opt.foldmethod = "expr"
   vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
@@ -103,4 +102,24 @@ else
   -- )
   -- vim.api.nvim_set_keymap("n", "<C-0>", ":lua vim.g.neovide_scale_factor = 0.5<CR>", { silent = true })
   -- vim.api.nvim_set_keymap("n", "<C-)>", ":lua vim.g.neovide_transparency = 0.9<CR>", { silent = true })
+  --
+  function _G.compare_to_clipboard()
+    local ftype = vim.api.nvim_eval "&filetype"
+    vim.cmd "leftabove vnew [Clipboard]" -- Open a new vertical split, above the current window, named [Clipboard]
+    vim.cmd "setlocal bufhidden=wipe buftype=nofile noswapfile" -- Set options for a temporary scratch buffer
+    vim.cmd "put +" -- Paste the content from the '+' (system) register into the new buffer
+    vim.cmd "0d_" -- Delete the extra newline that `put` might add
+    vim.cmd [[silent %s/\r$//e]] -- Remove Windows-style carriage returns if present
+    vim.cmd("execute " .. "setlocal filetype=" .. ftype) -- Set the filetype to match the original buffer
+    vim.cmd "diffthis" -- Start diff mode for the new buffer
+    vim.cmd "wincmd p" -- Jump back to the original window
+    vim.cmd "diffthis" -- Start diff mode for the original buffer
+  end
+
+  -- Create a user command for easy access
+  vim.api.nvim_create_user_command(
+    "DiffWithClipboard",
+    _G.compare_to_clipboard,
+    { desc = "Compare active file with clipboard contents" }
+  )
 end
